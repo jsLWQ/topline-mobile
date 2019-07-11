@@ -11,9 +11,17 @@ export default new Router({
       component: () => import('@/views/login')
     },
     {
-      name: 'home',
+      name: 'tabBar',
       path: '/',
-      component: () => import('@/views/home')
+      component: () => import('@/views/tabbar-layout'),
+      children: [
+        {
+          name: 'home',
+          path: '',
+          component: () => import('@/views/home')
+        }
+      ]
     }
+
   ]
 })
