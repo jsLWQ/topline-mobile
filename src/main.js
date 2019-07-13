@@ -16,6 +16,13 @@ Validator.localize('zh_CN', zhCN)
 Vue.use(Vant)
 
 Vue.config.productionTip = false
+Vue.prototype.$ss = (time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
 
 new Vue({
   router,

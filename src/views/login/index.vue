@@ -39,7 +39,7 @@ export default {
     return {
       user: {
         mobile: '17686506616',
-        code: '123456'
+        code: '246810'
       },
       loginLoading: false
     }
