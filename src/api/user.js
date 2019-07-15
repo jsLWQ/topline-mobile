@@ -15,3 +15,13 @@ export const userLogin = ({ mobile, code }) => {
     }
   })
 }
+// 拉黑用户
+export const blackLists = userID => {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/user/blacklists',
+    data: {
+      target: userID
+    }
+  })
+}

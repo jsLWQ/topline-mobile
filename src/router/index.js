@@ -21,7 +21,11 @@ export default new Router({
           component: () => import('@/views/home')
         }
       ]
+    },
+    {
+      name: 'search',
+      path: '/search',
+      component: () => import('@/views/search')
     }
-
   ]
 })
