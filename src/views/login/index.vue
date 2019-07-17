@@ -59,7 +59,7 @@ export default {
         const data = await userLogin(this.user)
         this.$store.commit('setUsers', data)
         this.$toast.success('登录成功')
-        this.$router.push('/')
+        this.$router.push(this.$store.state.targets)
         // console.log(datas)
       } catch (error) {
         console.log(error)

@@ -1,9 +1,18 @@
 <template>
   <div>
-    <van-nav-bar
+    <!-- <van-nav-bar
       title="首页"
       fixed
-    />
+    /> -->
+      <div slot="header" class="home_box">
+        <van-search
+          placeholder="请输入搜索关键词"
+          shape="round"
+          @focus="$router.push({name: 'search'})"
+        >
+        </van-search>
+      </div>
+    <!-- </van-nav-bar> -->
     <van-tabs v-model="active" swipeable>
       <van-tab v-for="item in arrChannel" :key="item.id" :title="item.name">
           <van-pull-refresh :success-text="item.ChannelText" v-model="item.pullIsloading" @refresh="onRefresh">
@@ -277,5 +286,18 @@ export default {
 .right_icon {
   float: right;
   z-index: 0;
+}
+.home_box {
+  width: 375*2px;
+  line-height: 46*2px;
+  height: 46*2px;
+  display: flex;
+  background: rgb(50, 150, 250);
+  justify-content: center;
+  position: fixed;
+  z-index: 888;
+}
+.home_box /deep/ .van-search {
+  background: rgb(50, 150, 250)!important;
 }
 </style>

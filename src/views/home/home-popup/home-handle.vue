@@ -59,13 +59,33 @@ export default {
       try {
         let obj = {
           target: this.clickArticle.art_id + '',
-          type: item.value
+          type: Number(item.value)
         }
-        console.log(obj)
-
-        await reportsArticle({ target: this.clickArticle.art_id + '', type: item.value })
+        // console.log(obj)
+        await reportsArticle(obj)
+        this.$emit('input', false)
+        this.isInform = false
+        this.$toast({
+          message: '举报成功',
+          icon: 'success'
+        })
       } catch (error) {
-        console.log(error)
+        // console.log(error.response.status)
+        if (error.response.status === 409) {
+          this.$emit('input', false)
+          this.isInform = false
+          this.$toast({
+            message: '该文章已被举报',
+            icon: 'success'
+          })
+        } else {
+          this.$emit('input', false)
+          this.isInform = false
+          this.$toast({
+            message: '操作失败',
+            icon: 'success'
+          })
+        }
       }
     },
     // 拉黑用户

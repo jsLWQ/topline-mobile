@@ -1,6 +1,8 @@
 import axios from 'axios'
 import store from '@/store/index.js'
 import JSONbig from 'json-bigint'
+import router from '@/router'
+
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/'
   // baseURL: `http://toutiao.course.itcast.cn`
@@ -30,7 +32,42 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(response => {
   // console.log(response)
   return response.data.data || response.data.data
-}, error => {
+}, async error => {
+  // console.dir(error)
+  const { user } = store.state
+  // console.log(user)
+  if (error.response.status === 401) {
+    console.log(router.currentRoute)
+    store.commit('setTarget', router.currentRoute.path)
+    if (!user || !user.refresh_token) {
+      router.push({
+        name: 'login'
+      })
+      return
+    }
+    // console.log(user.refresh_token)
+    try {
+      const { data } = await axios({
+        method: 'PUT',
+        url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+        // url: 'http://toutiao.course.itcast.cn/app/v1_0/authorizations',
+        headers: {
+          Authorization: `Bearer ${user.refresh_token}`
+        }
+      })
+      store.commit('setUsers', {
+        token: data.data.token,
+        refresh_token: user.refresh_token
+      })
+      return request(error.config)
+    } catch (error) {
+      console.dir(error)
+      window.localStorage.removeItem('user')
+      router.push({
+        name: 'login'
+      })
+    }
+  }
   return Promise.reject(error)
 })
 
